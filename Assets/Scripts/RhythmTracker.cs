@@ -8,20 +8,10 @@ public class RhythmTracker : MonoBehaviour {
 	private float last_tick_time;
 	private float last_press_time;
 	private bool got_input;
+	private int streak;
 	
-	// Use this for initialization
-	IEnumerator Flash()
+	void Start () 
 	{
-		while (true)
-		{
-			last_tick_time = Time.realtimeSinceStartup;
-			player.renderer.sharedMaterial.color = Color.green;
-			Invoke("end_flash", 0.1f);
-			Invoke("fail", 60 / bpm);
-			yield return new WaitForSeconds(60 / bpm);
-		}
-	}
-	void Start () {
 		last_tick_time = float.MaxValue;
 		last_press_time = float.MinValue;
 		player = FindObjectOfType(typeof(Player)) as Player;
@@ -32,23 +22,26 @@ public class RhythmTracker : MonoBehaviour {
 	{
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
-			StartCoroutine(Flash());
+			InvokeRepeating("Flash", 0, (60/bpm));
 		}
 		
 		
 		if (got_input)
 		{
 			float diff = Mathf.Abs(last_tick_time - last_press_time);
-			if (diff < 0.5f)
+			if (diff < 0.3f)
 			{
+				streak += 4;
 				print("Great!");
 			}
-			else if (diff < 1f)
+			else if (diff < 0.7f)
 			{
+				streak += 2;
 				print("Okay!");
 			}
 			else
 			{
+				streak = Mathf.Clamp(streak - 1, 0, streak);
 				print("Bad!");
 			}
 			print("Diff: " + diff);
@@ -73,11 +66,26 @@ public class RhythmTracker : MonoBehaviour {
 	
 	void fail()
 	{
+		streak = 0;
 		print("Fail!");
 	}
 	
 	void end_flash()
 	{
 		player.renderer.sharedMaterial.color = new Color(0.5f, 0.5f, 0.5f, 1.0f);
+	}
+	
+	public int GetStreak()
+	{
+		return streak;
+	}
+	
+	void Flash()
+	{
+		last_tick_time = Time.realtimeSinceStartup;
+		player.renderer.sharedMaterial.color = Color.green;
+		print("last tick: " + last_tick_time);
+		Invoke("end_flash", 0.15f);
+		Invoke("fail", 60 / bpm);
 	}
 }
