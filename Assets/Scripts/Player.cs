@@ -5,7 +5,7 @@ public class Player : MonoBehaviour
 {
 	private Vector3 checkpoint;
 	private Controls controls;
-	private bool on_ground = true;
+	private bool on_ground = false;
 	
 	// Use this for initialization
 	void Start () 

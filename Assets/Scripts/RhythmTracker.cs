@@ -25,16 +25,32 @@ public class RhythmTracker : MonoBehaviour {
 			InvokeRepeating("Flash", 0, (60/bpm));
 		}
 		
-		
+#if UNITY_IOS || UNITY_ANDROID
+		if (Input.touchCount > 0)
+		{
+			foreach(Touch t in Input.touches)
+			{
+				if (t.phase == TouchPhase.Ended)
+				{
+					GotInput();
+				}
+			}
+		}
+#else
+		if (Input.GetKeyUp(KeyCode.T))
+		{
+			GotInput();
+		}
+#endif	
 		if (got_input)
 		{
 			float diff = Mathf.Abs(last_tick_time - last_press_time);
-			if (diff < 0.3f)
+			if (diff < 0.1f)
 			{
 				streak += 4;
 				print("Great!");
 			}
-			else if (diff < 0.7f)
+			else if (diff < 0.4f)
 			{
 				streak += 2;
 				print("Okay!");
@@ -50,19 +66,25 @@ public class RhythmTracker : MonoBehaviour {
 		}
 	}
 	
-	void OnGUI()
+	void GotInput()
 	{
-		Event cur = Event.current;
-		if (!got_input && cur.isKey && cur.type == EventType.KeyUp)
-		{
-			if (cur.keyCode == KeyCode.T)
-			{
-				last_press_time = Time.realtimeSinceStartup;
-				got_input = true;
-				CancelInvoke("fail");
-			}
-		}
+		last_press_time = Time.realtimeSinceStartup;
+		CancelInvoke("fail");
+		got_input = true;
 	}
+	
+//	void OnGUI()
+//	{
+//		Event cur = Event.current;
+//		if (!got_input && cur.isKey && cur.type == EventType.KeyUp)
+//		{
+//			if (cur.keyCode == KeyCode.T)
+//			{
+//				last_press_time = Time.realtimeSinceStartup;
+//				got_input = true;
+//			}
+//		}
+//	}
 	
 	void fail()
 	{

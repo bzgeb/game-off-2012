@@ -7,7 +7,7 @@ public class Controls : MonoBehaviour
 	private GameObject player_object;
 	public GameObject world;
 	public AudioClip music;
-	public float jump_strength = 2;
+	public float jump_strength = 15;
 	private int current_rotation;
 	private Vector3 camera_right;
 	private bool start_moving;
@@ -17,15 +17,25 @@ public class Controls : MonoBehaviour
 	private float current_speed;
 	public float max_speed;
 	
+	private float vertical_speed;
+	public float gravity = 20;
+	
 	void Start ()
 	{
+		vertical_speed = 0;
 		current_speed = 1f;
+		
 		player_object = player.gameObject;
+		
 		camera_right = Camera.main.transform.right;
+		
 		start_moving = false;
+		
 		timer = FindObjectOfType(typeof(Timer)) as Timer;
+		
 		rhythm_tracker = FindObjectOfType(typeof(RhythmTracker)) as RhythmTracker;
 	}
+	
 	
 	void Update () 
 	{
@@ -35,16 +45,18 @@ public class Controls : MonoBehaviour
 		
 		keyboard_controls();
 		rotate_controls();
-	}
-	
-	
-	void LateUpdate()
-	{
+		
+		if (!player.OnGround())
+		{
+			vertical_speed -= gravity * Time.deltaTime;
+		}
+		
 		if (start_moving)
 		{
-			player_object.rigidbody.velocity = current_speed * 0.5f * camera_right;
+			player_object.rigidbody.velocity = (current_speed * 0.5f * camera_right) + new Vector3(0, vertical_speed, 0);
 		}
 	}
+	
 	
 	private void keyboard_controls()
 	{
@@ -57,9 +69,9 @@ public class Controls : MonoBehaviour
 		}
 		
 		// Jump
-		if (Input.GetKeyDown(KeyCode.W))
+		if (Input.GetKeyDown(KeyCode.W) && player.OnGround())
 		{
-			player_object.rigidbody.AddForce(Vector3.up * jump_strength, ForceMode.Impulse);
+			vertical_speed = jump_strength;
 		}
 	}
 	
