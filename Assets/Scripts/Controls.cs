@@ -48,7 +48,7 @@ public class Controls : MonoBehaviour
 	
 	private void keyboard_controls()
 	{
-		if (Input.GetKeyDown(KeyCode.Space))
+		if (Input.GetKeyUp(KeyCode.Space))
 		{
 			start_moving = true;
 			audio.clip = music;

@@ -20,7 +20,7 @@ public class RhythmTracker : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		if (Input.GetKeyDown(KeyCode.Space))
+		if (Input.GetKeyUp(KeyCode.Space))
 		{
 			InvokeRepeating("Flash", 0, (60/bpm));
 		}
@@ -53,7 +53,7 @@ public class RhythmTracker : MonoBehaviour {
 	void OnGUI()
 	{
 		Event cur = Event.current;
-		if (!got_input && cur.isKey && cur.type == EventType.KeyDown)
+		if (!got_input && cur.isKey && cur.type == EventType.KeyUp)
 		{
 			if (cur.keyCode == KeyCode.T)
 			{
@@ -84,7 +84,7 @@ public class RhythmTracker : MonoBehaviour {
 	{
 		last_tick_time = Time.realtimeSinceStartup;
 		player.renderer.sharedMaterial.color = Color.green;
-		print("last tick: " + last_tick_time);
+//		print("last tick: " + last_tick_time);
 		Invoke("end_flash", 0.15f);
 		Invoke("fail", 60 / bpm);
 	}
