@@ -13,3 +13,4 @@ iOS-Build/*
 *.xcuserdatad
 *.apk
 *.pbxuser
+*.app
