@@ -20,7 +20,7 @@ public class Pulse : MonoBehaviour {
 	
 	void DoPulse()
 	{
-		iTween.ScaleTo(gameObject, new Vector3(3, 3, 3), 0.08f);
+		gameObject.transform.localScale = new Vector3(3, 3, 3);
 		Invoke("Reset", 0.12f);
 	}
 	

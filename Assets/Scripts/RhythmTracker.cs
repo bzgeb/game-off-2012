@@ -53,12 +53,12 @@ public class RhythmTracker : MonoBehaviour {
 				diff = Mathf.Abs(last_tick_frame - last_press_frame);
 				if (diff < 14)
 				{
-					streak += 4;
+					streak += 3;
 					print("Great!");
 				}
 				else if (diff < 20)
 				{
-					streak += 2;
+					streak += 1;
 					print("Okay!");
 				}
 				else
@@ -72,12 +72,12 @@ public class RhythmTracker : MonoBehaviour {
 				diff = Mathf.Abs(last_tick_time - last_press_time);
 				if (diff < 0.1f)
 				{
-					streak += 4;
+					streak += 3;
 					print("Great!");
 				}
 				else if (diff < 0.4f)
 				{
-					streak += 2;
+					streak += 1;
 					print("Okay!");
 				}
 				else
@@ -96,9 +96,9 @@ public class RhythmTracker : MonoBehaviour {
 	{
 		last_press_time = Time.realtimeSinceStartup;
 		last_press_frame = Time.frameCount;
-		print("Real Time (Input): " + Time.realtimeSinceStartup);
-		print("Other Time (Input): " + Time.time);
-		print("Frame Count (Input): " + Time.frameCount);
+//		print("Real Time (Input): " + Time.realtimeSinceStartup);
+//		print("Other Time (Input): " + Time.time);
+//		print("Frame Count (Input): " + Time.frameCount);
 		CancelInvoke("fail");
 		got_input = true;
 	}
@@ -136,9 +136,9 @@ public class RhythmTracker : MonoBehaviour {
 	{
 		last_tick_time = Time.realtimeSinceStartup;
 		last_tick_frame = Time.frameCount;
-		print("Real Time (Beat): " + Time.realtimeSinceStartup);
-		print("Other Time (Beat): " + Time.time);
-		print("Frame Count (Beat): " + Time.frameCount);
+//		print("Real Time (Beat): " + Time.realtimeSinceStartup);
+//		print("Other Time (Beat): " + Time.time);
+//		print("Frame Count (Beat): " + Time.frameCount);
 //		player.renderer.sharedMaterial.color = Color.green;
 //		print("last tick: " + last_tick_time);
 //		Invoke("end_flash", 0.15f);

@@ -9,7 +9,6 @@ public class Controls : MonoBehaviour
 	public AudioClip music;
 	public float jump_strength = 15;
 	private int current_rotation;
-	private Vector3 camera_right;
 	private bool start_moving;
 	private Timer timer;
 	private RhythmTracker rhythm_tracker;
@@ -28,8 +27,6 @@ public class Controls : MonoBehaviour
 		
 		player_object = player.gameObject;
 		
-		camera_right = Camera.main.transform.right;
-		
 		start_moving = false;
 		
 		timer = FindObjectOfType(typeof(Timer)) as Timer;
@@ -41,10 +38,29 @@ public class Controls : MonoBehaviour
 	void Update () 
 	{
 		int current_streak = rhythm_tracker.GetStreak();
-		current_speed = Mathf.Clamp(1f * current_streak, 1f, max_speed);
+		
+		if (current_streak > 5)
+		{
+			current_speed = max_speed * 0.25f;
+		}
+		else if (current_streak > 10)
+		{
+			current_speed = max_speed * 0.50f;
+		}
+		else if (current_streak > 15)
+		{
+			current_speed = max_speed * 0.75f;
+		}
+		else if (current_streak > 25)
+		{
+			current_speed = max_speed;
+		}
+		else
+		{
+			current_speed = max_speed * 0.125f;
+		}
 		
 		keyboard_controls();
-		rotate_controls();
 		
 		if (!player.OnGround())
 		{
@@ -53,7 +69,7 @@ public class Controls : MonoBehaviour
 		
 		if (start_moving)
 		{
-			player_object.rigidbody.velocity = (current_speed * 0.5f * move_direction) + new Vector3(0, vertical_speed, 0);
+			player_object.rigidbody.velocity = (current_speed * move_direction) + new Vector3(0, vertical_speed, 0);
 		}
 	}
 	
@@ -85,7 +101,6 @@ public class Controls : MonoBehaviour
 		{
 			current_rotation += direction;
 			world.transform.rotation = Quaternion.AngleAxis(current_rotation * 90, Vector3.up);
-			camera_right = Camera.main.transform.right;
 		}
 		
 	}

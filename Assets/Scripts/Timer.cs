@@ -6,10 +6,17 @@ public class Timer : MonoBehaviour {
 	float start_time;
 	float end_time;
 	float current_time;
+	GUIText timer_text;
+	
+	void Start ()
+	{
+		timer_text = GameObject.Find("Timer Text").GetComponent<GUIText>();
+	}
 	
 	void Update () 
 	{
 		current_time = Time.timeSinceLevelLoad - start_time;
+		timer_text.text = current_time.ToString();
 	}
 	
 	public void StartTimer()

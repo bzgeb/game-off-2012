@@ -13,6 +13,7 @@ CGPROGRAM
 
 sampler2D _MainTex;
 fixed4 _Color;
+float _Alpha;
 
 struct Input {
 	float2 uv_MainTex;
