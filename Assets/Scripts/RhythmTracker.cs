@@ -7,8 +7,11 @@ public class RhythmTracker : MonoBehaviour {
 	private Player player;
 	private float last_tick_time;
 	private float last_press_time;
+	private float last_tick_frame;
+	private float last_press_frame;
 	private bool got_input;
 	private int streak;
+	private const bool USE_FRAME_COUNT = true;
 	
 	void Start () 
 	{
@@ -44,21 +47,44 @@ public class RhythmTracker : MonoBehaviour {
 #endif	
 		if (got_input)
 		{
-			float diff = Mathf.Abs(last_tick_time - last_press_time);
-			if (diff < 0.1f)
+			float diff;
+			if (USE_FRAME_COUNT)
 			{
-				streak += 4;
-				print("Great!");
-			}
-			else if (diff < 0.4f)
-			{
-				streak += 2;
-				print("Okay!");
+				diff = Mathf.Abs(last_tick_frame - last_press_frame);
+				if (diff < 14)
+				{
+					streak += 4;
+					print("Great!");
+				}
+				else if (diff < 20)
+				{
+					streak += 2;
+					print("Okay!");
+				}
+				else
+				{
+					streak = Mathf.Clamp(streak - 1, 0, streak);
+					print("Bad!");				
+				}
 			}
 			else
 			{
-				streak = Mathf.Clamp(streak - 1, 0, streak);
-				print("Bad!");
+				diff = Mathf.Abs(last_tick_time - last_press_time);
+				if (diff < 0.1f)
+				{
+					streak += 4;
+					print("Great!");
+				}
+				else if (diff < 0.4f)
+				{
+					streak += 2;
+					print("Okay!");
+				}
+				else
+				{
+					streak = Mathf.Clamp(streak - 1, 0, streak);
+					print("Bad!");
+				}
 			}
 			print("Diff: " + diff);
 			
@@ -69,6 +95,10 @@ public class RhythmTracker : MonoBehaviour {
 	void GotInput()
 	{
 		last_press_time = Time.realtimeSinceStartup;
+		last_press_frame = Time.frameCount;
+		print("Real Time (Input): " + Time.realtimeSinceStartup);
+		print("Other Time (Input): " + Time.time);
+		print("Frame Count (Input): " + Time.frameCount);
 		CancelInvoke("fail");
 		got_input = true;
 	}
@@ -105,7 +135,11 @@ public class RhythmTracker : MonoBehaviour {
 	void Flash()
 	{
 		last_tick_time = Time.realtimeSinceStartup;
-		player.renderer.sharedMaterial.color = Color.green;
+		last_tick_frame = Time.frameCount;
+		print("Real Time (Beat): " + Time.realtimeSinceStartup);
+		print("Other Time (Beat): " + Time.time);
+		print("Frame Count (Beat): " + Time.frameCount);
+//		player.renderer.sharedMaterial.color = Color.green;
 //		print("last tick: " + last_tick_time);
 		Invoke("end_flash", 0.15f);
 		Invoke("fail", 60 / bpm);

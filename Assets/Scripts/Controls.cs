@@ -19,6 +19,7 @@ public class Controls : MonoBehaviour
 	
 	private float vertical_speed;
 	public float gravity = 20;
+	public Vector3 move_direction;
 	
 	void Start ()
 	{
@@ -40,7 +41,6 @@ public class Controls : MonoBehaviour
 	void Update () 
 	{
 		int current_streak = rhythm_tracker.GetStreak();
-//		print("Streak: " + current_streak);
 		current_speed = Mathf.Clamp(1f * current_streak, 1f, max_speed);
 		
 		keyboard_controls();
@@ -53,7 +53,7 @@ public class Controls : MonoBehaviour
 		
 		if (start_moving)
 		{
-			player_object.rigidbody.velocity = (current_speed * 0.5f * camera_right) + new Vector3(0, vertical_speed, 0);
+			player_object.rigidbody.velocity = (current_speed * 0.5f * move_direction) + new Vector3(0, vertical_speed, 0);
 		}
 	}
 	
