@@ -141,7 +141,7 @@ public class RhythmTracker : MonoBehaviour {
 		print("Frame Count (Beat): " + Time.frameCount);
 //		player.renderer.sharedMaterial.color = Color.green;
 //		print("last tick: " + last_tick_time);
-		Invoke("end_flash", 0.15f);
+//		Invoke("end_flash", 0.15f);
 		Invoke("fail", 60 / bpm);
 	}
 }
