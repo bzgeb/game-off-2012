@@ -32,6 +32,7 @@ public class Controls : MonoBehaviour
 		timer = FindObjectOfType(typeof(Timer)) as Timer;
 		
 		rhythm_tracker = FindObjectOfType(typeof(RhythmTracker)) as RhythmTracker;
+		
 	}
 	
 	
@@ -39,21 +40,21 @@ public class Controls : MonoBehaviour
 	{
 		int current_streak = rhythm_tracker.GetStreak();
 		
-		if (current_streak > 5)
+		if (current_streak > 25)
 		{
-			current_speed = max_speed * 0.25f;
-		}
-		else if (current_streak > 10)
-		{
-			current_speed = max_speed * 0.50f;
+			current_speed = max_speed;
 		}
 		else if (current_streak > 15)
 		{
 			current_speed = max_speed * 0.75f;
 		}
-		else if (current_streak > 25)
+		else if (current_streak > 10)
 		{
-			current_speed = max_speed;
+			current_speed = max_speed * 0.50f;
+		}
+		else if (current_streak > 5)
+		{
+			current_speed = max_speed * 0.25f;
 		}
 		else
 		{
@@ -62,7 +63,7 @@ public class Controls : MonoBehaviour
 		
 		keyboard_controls();
 		
-		if (!player.OnGround())
+		if (start_moving && !player.OnGround())
 		{
 			vertical_speed -= gravity * Time.deltaTime;
 		}

@@ -6,12 +6,14 @@ public class Player : MonoBehaviour
 	private Vector3 checkpoint;
 	private Controls controls;
 	private bool on_ground = false;
+	private SmoothFollow smooth_follow;
 	
 	// Use this for initialization
 	void Start () 
 	{
 		checkpoint = transform.position;
 		controls = FindObjectOfType(typeof(Controls)) as Controls;
+		smooth_follow = FindObjectOfType(typeof(SmoothFollow)) as SmoothFollow;
 	}
 	
 	// Update is called once per frame
@@ -36,6 +38,11 @@ public class Player : MonoBehaviour
 		{
 			stop();
 		}
+		
+		if (other.tag == "RotationTrigger")
+		{
+			smooth_follow.desired_rotation = other.GetComponent<RotationTrigger>().desired_rotation;
+		}
 	}
 	
 	void stop()
@@ -53,7 +60,10 @@ public class Player : MonoBehaviour
 	
 	void OnCollisionEnter(Collision collision_info)
 	{
-		on_ground = true;
+		if (collision_info.contacts[0].normal.y > 0)
+		{
+			on_ground = true;
+		}
 	}
 	
 	public bool OnGround()
