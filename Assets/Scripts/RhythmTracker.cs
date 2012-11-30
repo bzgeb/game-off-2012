@@ -40,7 +40,7 @@ public class RhythmTracker : MonoBehaviour {
 			}
 		}
 #else
-		if (Input.GetKeyUp(KeyCode.T))
+		if (Input.GetKeyUp(KeyCode.B))
 		{
 			GotInput();
 		}

@@ -87,7 +87,7 @@ public class Controls : MonoBehaviour
 	
 	private void keyboard_controls()
 	{
-		if (Input.GetKeyUp(KeyCode.Space))
+		if (Input.GetKeyUp(KeyCode.Space) && !start_moving)
 		{
 			start_moving = true;
 			audio.clip = music;
@@ -96,7 +96,7 @@ public class Controls : MonoBehaviour
 		}
 		
 		// Jump
-		if (Input.GetKeyDown(KeyCode.W) && player.OnGround())
+		if ((Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.UpArrow)) && player.OnGround())
 		{
 			vertical_speed = jump_strength;
 		}
