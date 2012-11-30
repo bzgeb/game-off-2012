@@ -12,6 +12,8 @@ public class RhythmTracker : MonoBehaviour {
 	private bool got_input;
 	private int streak;
 	private const bool USE_FRAME_COUNT = true;
+	private int beats_queued;
+	private int inputs_queued;
 	
 	void Start () 
 	{
@@ -96,9 +98,6 @@ public class RhythmTracker : MonoBehaviour {
 	{
 		last_press_time = Time.realtimeSinceStartup;
 		last_press_frame = Time.frameCount;
-//		print("Real Time (Input): " + Time.realtimeSinceStartup);
-//		print("Other Time (Input): " + Time.time);
-//		print("Frame Count (Input): " + Time.frameCount);
 		CancelInvoke("fail");
 		got_input = true;
 	}
@@ -122,11 +121,6 @@ public class RhythmTracker : MonoBehaviour {
 		print("Fail!");
 	}
 	
-	void end_flash()
-	{
-		player.renderer.sharedMaterial.color = new Color(0.5f, 0.5f, 0.5f, 1.0f);
-	}
-	
 	public int GetStreak()
 	{
 		return streak;
@@ -136,12 +130,7 @@ public class RhythmTracker : MonoBehaviour {
 	{
 		last_tick_time = Time.realtimeSinceStartup;
 		last_tick_frame = Time.frameCount;
-//		print("Real Time (Beat): " + Time.realtimeSinceStartup);
-//		print("Other Time (Beat): " + Time.time);
-//		print("Frame Count (Beat): " + Time.frameCount);
-//		player.renderer.sharedMaterial.color = Color.green;
-//		print("last tick: " + last_tick_time);
-//		Invoke("end_flash", 0.15f);
+
 		Invoke("fail", 60 / bpm);
 	}
 }

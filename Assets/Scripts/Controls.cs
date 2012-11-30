@@ -69,7 +69,6 @@ public class Controls : MonoBehaviour
 		
 		if (start_moving && !player.OnGround())
 		{
-			print("Gravity: " + gravity);
 			vertical_speed -= gravity * Time.deltaTime;
 		}
 		
