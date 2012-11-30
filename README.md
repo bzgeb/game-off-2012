@@ -4,7 +4,7 @@ Rhythm Rails is a rhythm racing game.  Tap to the beat to _push_ your racer forw
 Made for the Github Game-Off 2012 in the month of November.
 Playable at bzgeb.github.com/game-off-2012
 
-<img src="http://i.imgur.com/o1ToD">
-<img src="http://i.imgur.com/AQKdF">
-<img src="http://i.imgur.com/Y3PTa">
+<img src="http://i.imgur.com/o1ToD.png">
+<img src="http://i.imgur.com/AQKdF.png">
+<img src="http://i.imgur.com/Y3PTa.png">
 
