@@ -77,6 +77,11 @@ public class Controls : MonoBehaviour
 		{
 			player_object.rigidbody.velocity = (current_speed * move_direction) + new Vector3(0, vertical_speed, 0);
 		}
+		
+		if (Input.GetKeyUp(KeyCode.R))
+		{
+			Application.LoadLevel(0);
+		}
 	}
 	
 	
