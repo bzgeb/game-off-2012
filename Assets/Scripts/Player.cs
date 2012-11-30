@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
 	private SmoothFollow smooth_follow;
 	private Timer timer;
 	private PowerupTween powerup_tween;
+	private GameObject level_complete_text;
 	
 	// Use this for initialization
 	void Start () 
@@ -18,6 +19,8 @@ public class Player : MonoBehaviour
 		smooth_follow = FindObjectOfType(typeof(SmoothFollow)) as SmoothFollow;
 		timer = FindObjectOfType(typeof(Timer)) as Timer;
 		powerup_tween = FindObjectOfType(typeof(PowerupTween)) as PowerupTween;
+		level_complete_text = GameObject.Find("Complete Text");
+		level_complete_text.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -57,14 +60,19 @@ public class Player : MonoBehaviour
 			timer.ReduceTime(1);
 			powerup_tween.Play();
 		}
+		
+		if (other.tag == "GravityTrigger")
+		{
+			controls.gravity = -controls.gravity;
+		}
 	}
 	
 	void stop()
 	{
-		rigidbody.velocity = Vector3.zero;
-		rigidbody.angularVelocity = Vector3.zero;
-		rigidbody.Sleep();
-		controls.enabled = false;
+		timer.StopTimer();
+		controls.GameOver();
+		level_complete_text.SetActive(true);
+		timer.SetTextPosition(new Vector3(0.5f, 0.6f, 0));
 	}
 	
 	void OnCollisionExit(Collision collision_info)
@@ -75,10 +83,21 @@ public class Player : MonoBehaviour
 	void OnCollisionEnter(Collision collision_info)
 	{
 		print("Normals: " + collision_info.contacts[0].normal);
-		if (collision_info.contacts[0].normal.y > 0)
+		if (controls.gravity > 0)
 		{
-			SendMessage("DidLand", SendMessageOptions.DontRequireReceiver);
-			on_ground = true;
+			if (collision_info.contacts[0].normal.y > 0)
+			{
+				SendMessage("DidLand", SendMessageOptions.DontRequireReceiver);
+				on_ground = true;
+			}
+		}
+		else
+		{
+			if (collision_info.contacts[0].normal.y < 0)
+			{
+				SendMessage("DidLand", SendMessageOptions.DontRequireReceiver);
+				on_ground = true;
+			}
 		}
 	}
 	

@@ -34,10 +34,11 @@ public class Timer : MonoBehaviour {
 		started = true;
 	}
 	
-	void StopTimer()
+	public void StopTimer()
 	{
 		end_time = Time.timeSinceLevelLoad;
 		current_time = end_time - start_time;
+		started = false;
 	}
 	
 	float GetTime()
@@ -48,5 +49,10 @@ public class Timer : MonoBehaviour {
 	public void ReduceTime(float reduction)
 	{
 		start_time += reduction;
+	}
+	
+	public void SetTextPosition(Vector3 pos)
+	{
+		timer_text.transform.position = pos;
 	}
 }

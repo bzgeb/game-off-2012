@@ -19,6 +19,7 @@ public class Controls : MonoBehaviour
 	private float vertical_speed;
 	public float gravity = 20;
 	public Vector3 move_direction;
+	private bool game_over = false;
 	
 	void Start ()
 	{
@@ -38,33 +39,37 @@ public class Controls : MonoBehaviour
 	
 	void Update () 
 	{
-		int current_streak = rhythm_tracker.GetStreak();
+		if (!game_over)
+		{
+			int current_streak = rhythm_tracker.GetStreak();
 		
-		if (current_streak > 25)
-		{
-			current_speed = max_speed;
-		}
-		else if (current_streak > 15)
-		{
-			current_speed = max_speed * 0.75f;
-		}
-		else if (current_streak > 10)
-		{
-			current_speed = max_speed * 0.50f;
-		}
-		else if (current_streak > 5)
-		{
-			current_speed = max_speed * 0.25f;
-		}
-		else
-		{
-			current_speed = max_speed * 0.125f;
-		}
+			if (current_streak > 25)
+			{
+				current_speed = max_speed;
+			}
+			else if (current_streak > 15)
+			{
+				current_speed = max_speed * 0.75f;
+			}
+			else if (current_streak > 10)
+			{
+				current_speed = max_speed * 0.50f;
+			}
+			else if (current_streak > 5)
+			{
+				current_speed = max_speed * 0.25f;
+			}
+			else
+			{
+				current_speed = max_speed * 0.125f;
+			}
 		
-		keyboard_controls();
+			keyboard_controls();
+		}
 		
 		if (start_moving && !player.OnGround())
 		{
+			print("Gravity: " + gravity);
 			vertical_speed -= gravity * Time.deltaTime;
 		}
 		
@@ -115,5 +120,10 @@ public class Controls : MonoBehaviour
 	public void SetVerticalSpeed(float speed)
 	{
 		vertical_speed = 0;
+	}
+	
+	public void GameOver()
+	{
+		game_over = true;
 	}
 }
