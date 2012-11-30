@@ -105,4 +105,15 @@ public class Controls : MonoBehaviour
 		}
 		
 	}
+	
+	public void Reset()
+	{
+		vertical_speed = 0;
+		current_speed = 1f;
+	}
+	
+	public void SetVerticalSpeed(float speed)
+	{
+		vertical_speed = 0;
+	}
 }

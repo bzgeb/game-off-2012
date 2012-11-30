@@ -12,6 +12,7 @@ public class Timer : MonoBehaviour {
 	void Start ()
 	{
 		timer_text = GameObject.Find("Timer Text").GetComponent<GUIText>();
+//		timer_text.pixelOffset = new Vector2(Screen.width * 0.36f, Screen.height * 0.42f);
 		started = false;
 	}
 	
@@ -20,11 +21,9 @@ public class Timer : MonoBehaviour {
 		if (started)
 		{
 			current_time = Time.timeSinceLevelLoad - start_time;
-//			timer_text.text = current_time.ToString();
 			int seconds = (int)Mathf.Floor(current_time);
 			int milliseconds = (int)Mathf.Floor((current_time - seconds) * 100);
 			System.TimeSpan timeSpan = new System.TimeSpan(0, 0, 0, seconds, milliseconds);
-//			timer_text.text = new System.DateTime((long)current_time * System.TimeSpan.TicksPerSecond).ToString();
 			timer_text.text = string.Format("{0:D2}:{1:D2}:{2:D2}", timeSpan.Minutes, timeSpan.Seconds, timeSpan.Milliseconds);
 		}
 	}
@@ -44,5 +43,10 @@ public class Timer : MonoBehaviour {
 	float GetTime()
 	{
 		return current_time;
+	}
+	
+	public void ReduceTime(float reduction)
+	{
+		start_time += reduction;
 	}
 }
