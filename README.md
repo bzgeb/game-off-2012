@@ -16,6 +16,6 @@ Playable at bzgeb.github.com/game-off-2012
 
 
 ## Credits
-Design/Code - [Bronson Zgeb](http://bronsonzgeb.blogspot.ca/) 
-Music - [Big Sad](http://bigsad.bandcamp.com/)
-Font - [Acorn Nostalgia](http://fontstruct.com/fontstructions/show/633012)
+* Design/Code - [Bronson Zgeb](http://bronsonzgeb.blogspot.ca/) 
+* Music - [Big Sad](http://bigsad.bandcamp.com/)
+* Font - [Acorn Nostalgia](http://fontstruct.com/fontstructions/show/633012)
